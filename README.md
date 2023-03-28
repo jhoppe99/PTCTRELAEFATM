@@ -1,6 +1,6 @@
 ## Overview
 
-This is the repository containing program to calculate the rotational energy levels and eigenvectors for asymmetric top molecules. Program is a part of Masters Degree Thesis conducted on Gdańsk University of Technology. 
+This is the repository containing program to calculate the rotational energy levels and eigenvectors for asymmetric top molecules. Program is a part of Master's Thesis conducted on Gdańsk University of Technology. 
 
 ## Getting started 
 
@@ -8,11 +8,11 @@ This is the repository containing program to calculate the rotational energy lev
 
 To clone this repository run one of this command into your terminal. If you have assigned an SSH key to your GitHub account try:
 ```bash
-git clone ...
+git clone git@github.com:jhoppe99/PTCTRELAEFATM.git
 ```
-and if you haven't, use HTTP (this will recquire logging):
+and if you haven't, use HTTPS (this will recquire to log in through terminal):
 ```bash
-git clone ...
+git clone https://github.com/jhoppe99/PTCTRELAEFATM.git
 ```
 
 **Setting up the virtual environment**
