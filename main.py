@@ -1,10 +1,7 @@
-# main python file, for now running script
-# just check if proper version of all dependencies
-# are installed properly
 import numpy as np
 
-from version_checker import VersionCheck
-from computations import DetOfMatrixCalculation
+from src.version_checker import VersionCheck
+from src.matrix_operations import DetOfMatrixCalculation
 
 arr = np.array([
     [2, 2, 12, 102, 0, 8],
@@ -42,5 +39,4 @@ def main():
 
 
 if __name__ == "__main__":
-
     main()
