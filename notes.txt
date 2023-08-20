@@ -1,0 +1,2 @@
+la.eigh -> wigenvalkues and eigenvalues
+np.diag
