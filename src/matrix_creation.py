@@ -1,136 +1,140 @@
-# import numpy as np
-# import numpy.linalg as la
-# from typing import Any
-
-# K = 5
-# J = 1
+from math import sqrt
+import numpy as np
 
 
-# class DiagonalsPreparation:
+class BasicMatrixes:
+    """Class for building H_0 and H_1 matrixes, which are base for further factorized submatrices."""
+    def __init__(self, A: float, B: float, C: float, K: int) -> None:
+        """Class constructor."""
+        self.A = A
+        self.B = B
+        self.C = C
+        self.K = K
 
-#     def __init__(self, K, A, B, C, J) -> None:
-#         self.K = K
-#         self.A = A
-#         self.B = B
-#         self.C = C
-#         self.J = J
+    def _i_and_j_equal(self, i: int) -> float:
+        """Calculate H_ii matrix element.
+        
+        Args:
+            i: element position in matrix.
 
-#     def looping_over_k1(self):
-#         big_diagonal = []
-#         for k1 in range(0, self.K):
-#             big_diagonal.append(self.looping_over_k2(k1=k1))
-#         return big_diagonal
+        Returns:
+            Value of matrix element on given position.       
+        """
+        return 0.5 * (self.A + self.B) * (self.K * (self.K + 1) - (i * i)) + self.C * (i * i)
 
-#     def looping_over_k2(self, k1: int) -> list:
-#         small_diagonal = []
-#         for k2 in range(0, self.K):
-#             if k1 == k2:
-#                 small_diagonal.append(self.equal_ks_equation(k1, k2))
-#             else:
-#                 small_diagonal.append(self.not_equal_ks_equation(k1, k2))
-#         return small_diagonal
+    def _j_bigger_than_i_by_2(self, i: int) -> float:
+        """Calculate H_i,i+2 matrix element.
+        
+        Args:
+            i: element position in matrix.
 
-#     def equal_ks_equation(self, k1: int, k2: int) -> float:
-#         eq = 0.5 * (self.A + self.B) * (self.J * (self.J + 1) - (k1 * k1)) + (self.C * (k1 * k1))
-#         return eq
+        Returns:
+            Value of matrix element on given position.
+        """       
+        return 0.25 * (self.B - self.A) * (self.K - i) * (self.K - i - 1) * (self.K + i + 1) * (self.K + i + 2)
 
-#     def not_equal_ks_equation(self, k1: int, k2: int) -> int:
-#         eq = 0.25 * (self.B - self.A) * (self.J - k1) * (self.J - k1 - 1) * (self.J + k1 + 1) * (self.J + k1 + 2)
-#         return eq
+    def _j_smaller_than_i_by_2(self, i: int) -> float:
+        """Calculate H_i,i-2 matrix element.
+        
+        Args:
+            i: element position in matrix.
 
+        Returns:
+            Value of matrix element on given position.
+        """
+        return 0.25 * (self.B - self.A) * (self.K + i) * (self.K + i - 1) * (self.K - i + 1) * (self.K - i + 2)
 
-# class MatrixesCreation:
-#     def __init__(self, diagonals: list) -> None:
-#         self.diagonals = diagonals
+    def _create_matrix_base(self) -> None:
+        """Create matrix base, with calculated all elements.
 
-#     def access_all_diagonals(self) -> list:
-#         print(self.diagonals)
+        This base will be further use to build H_0 and H_1 matrixes.
 
-#     def access_particual_list(self, j):
-#         return self.diagonals[j]
+        Returns:
+            Matrix which will be used to create H_0 and H_1 matrixes.
+        """
+        arr = np.zeros((abs(self.K), abs(self.K)), np.float64)
+        for i in range(0, arr.shape[0]):
+            for j in range(0, arr.shape[1]):
+                if i == j:
+                    arr[i][j] = self._i_and_j_equal(i=i)
+                elif j == i+2:
+                    arr[i][j] = self._j_bigger_than_i_by_2(i=i)
+                elif j == i-2:
+                    arr[i][j] = self._j_smaller_than_i_by_2(i=i)
+        
+        return arr
 
-#     def create_matrix(self) -> np.array:
-#         for j in range(0, len(self.diagonals)):
-#             diagonal = self.access_particual_list(j=j)
-#             self.calcualte_eigenvalues(np.diag(diagonal))
-#             print(np.diag(diagonal))
-#             print("--------------------------")
+    def create_H0_matrix(self) -> np.array:
+        """Create H_0 matrix.
 
-#     def calcualte_eigenvalues(self, arr) -> tuple:
-#         print(la.eigh(arr))
+        Returns:
+            H_0 matrix.
+        """
+        arr = self._create_matrix_base()
+        if arr.shape[0] > 1 and arr.shape[1] > 1:
+            arr[1][1] += self._j_smaller_than_i_by_2(1)
+        if arr.shape[0] > 2 and arr.shape[1] > 2:
+            arr[0][2] = arr[0][2] * sqrt(2)
+            arr[2][0] = arr[2][0] * sqrt(2) 
 
+        return arr
 
-# tryout = DiagonalsPreparation(K=5, A=0.25, B=0.3, C=0.4, J=0.5)
-# separate = MatrixesCreation(diagonals=tryout.looping_over_k1())
-# separate.create_matrix()
+    def create_H1_matrix(self) -> np.array:
+        arr = self._create_matrix_base()
+        arr = np.delete(np.delete(arr, 0, axis=0), 0, axis=1)
+        arr[0][0] -= self._j_bigger_than_i_by_2(-1)
+        
+        return arr
+        
+        
+class FactorizedSubmatrices():
+        """Class containing mathods creating submatices."""
 
-A = 2
-B = 3
-C = 1
-J = 5
+        def create_e_plus_matrix(arr: np.array) -> np.array:
+            """Create E^+ matrix.
 
-arr = [[0, 0, 0, 0, 0, 0, 0],
-       [0, 0, 0, 0, 0, 0, 0],
-       [0, 0, 0, 0, 0, 0, 0],
-       [0, 0, 0, 0, 0, 0, 0],
-       [0, 0, 0, 0, 0, 0, 0],
-       [0, 0, 0, 0, 0, 0, 0],
-       [0, 0, 0, 0, 0, 0, 0]]
+            The H_0 matrix is required in order to delete every 2 axises.
 
-# E_plus = [[0, 0, 0, 0, 0, 0, 0],
-#           [0, 0, 0, 0, 0, 0, 0],
-#           [0, 0, 0, 0, 0, 0, 0],
-#           [0, 0, 0, 0, 0, 0, 0],
-#           [0, 0, 0, 0, 0, 0, 0],
-#           [0, 0, 0, 0, 0, 0, 0],
-#           [0, 0, 0, 0, 0, 0, 0]]
+            Returns:
+                E^+ matrix.
+            """
+            for x in range(1, arr.shape[0]):
+                if x < arr.shape[0]:
+                    arr = np.delete(np.delete(arr, x, axis=0), x, axis=1)
 
-for x in arr:
-    print(x)
+            return arr
+        
+        def create_e_minus_matrix(arr: np.array) -> np.array:
+            """
+            """
+            for x in range(0, arr.shape[0]):
+                if x < arr.shape[0]:
+                    arr = np.delete(np.delete(arr, x, axis=0), x, axis=1)
+            
+            return arr
+        
+        def create_o_plus_matrix(arr: np.array) -> np.array:
+            """
+            """
+            for x in range(1, arr.shape[0]):
+                if x < arr.shape[0]:
+                    arr = np.delete(np.delete(arr, x, axis=0), x, axis=1)
 
+            return arr
+        
+        def create_o_minus_matrix(arr: np.array) -> np.array:
+            pass
+        # def
+        # e_plus = np.delete(np.delete(self.arr, 1, axis=0), 1, axis=1)
+        # for x in range(2, 5):
+        #     e_plus = np.delete(np.delete(e_plus, x, axis=0), 2, axis=1)
+        # print(f"E+ arr: \n{e_plus}")        
 
-def i_and_j_equal(i: int, j: int):
-    eq = 0.5 * (A + B) * (J * (J + 1) - (i * i)) + C * (i * i)
-    arr[i][j] = eq
-    return eq
+        # return e_plus
 
+    # def _get_E_minus_matrix(self) -> np.array:
+    #     e_plus = self._get_E_plus_matrix()
+    #     e_minus = np.delete(np.delete(e_plus, 0, axis=0), 0, axis=1)
+    #     print(f"E- arr: \n{e_minus}")
 
-def j_bigger_than_i_by_2(i: int, j: int):
-    eq = 0.25 * (B - A) * (J - i) * (J - i - 1) * (J + i + 1) * (J + i + 2)
-    arr[i][j] = eq
-    return eq
-
-
-def j_smaller_than_i_by_2(i: int, j: int):
-    eq = 0.25 * (B - A) * (J + i) * (J + i - 1) * (J - i + 1) * (J - i + 2)
-    arr[i][j] = eq
-    return eq
-
-
-for i in range(0, 7):
-    for j in range(0, 7):
-        if i == j:
-            print(f"FOR i={i} and j={j}")
-            print(i_and_j_equal(i=i, j=j))
-        elif j == i+2:
-            print(f"FOR i={i} and j={j}")
-            print(j_bigger_than_i_by_2(i=i, j=j))
-        elif j == i-2:
-            print(f"FOR i={i} and j={j}")
-            print(j_smaller_than_i_by_2(i=i, j=j))
-
-for x in arr:
-    print(x)
-
-E_plus = arr
-print("-----------------")
-for y in E_plus:
-    print(y)
-for k in range(0, 4):
-    for n in range(0, 4):
-        print(k)
-        print(n)
-        if k % 2 != 0 and n % 2 != 0 or E_plus[k][n] == 0:
-            del E_plus[k][n]
-
-print(E_plus)
+    #     return e_minus

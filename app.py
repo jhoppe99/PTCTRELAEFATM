@@ -1,0 +1,26 @@
+INFO:__main__:Hello from new ASYMTOP app!
+INFO:eigenvalues_and_eigenvectors:For matrix: [[0.069105   0.68455007 0.        ]
+ [0.68455007 0.067087   0.24894   ]
+ [0.         0.24894    0.061033  ]] -> eigenvalue is: [-0.66078942  0.06197587  0.79603856] | eigenvector: [[ 0.66341854 -0.34177977 -0.66562935]
+ [-0.70736314  0.00355941 -0.70684137]
+ [ 0.24395333  0.93977333 -0.23940103]]
+INFO:eigenvalues_and_eigenvectors:For matrix: [[0.067087 0.24894 ]
+ [0.24894  0.061033]] -> eigenvalue is: [-0.1848984  0.3130184] | eigenvector: [[ 0.7027949  -0.71139253]
+ [-0.71139253 -0.7027949 ]]
+INFO:eigenvalues_and_eigenvectors:For matrix: [[-0.4500245  0.38724  ]
+ [ 0.38724    0.0645645]] -> eigenvalue is: [-0.65765502  0.27219502] | eigenvector: [[-0.8813089  -0.47254061]
+ [ 0.47254061 -0.8813089 ]]
+INFO:__main__:Finishing run...
+INFO:__main__:Hello from new ASYMTOP app!
+INFO:eigenvalues_and_eigenvectors:For matrix: [[0.069105   0.68455007 0.        ]
+ [0.68455007 0.067087   0.24894   ]
+ [0.         0.24894    0.061033  ]] -> eigenvalue is: [-0.66078942  0.06197587  0.79603856] | eigenvector: [[ 0.66341854 -0.34177977 -0.66562935]
+ [-0.70736314  0.00355941 -0.70684137]
+ [ 0.24395333  0.93977333 -0.23940103]]
+INFO:eigenvalues_and_eigenvectors:For matrix: [[0.067087 0.24894 ]
+ [0.24894  0.061033]] -> eigenvalue is: [-0.1848984  0.3130184] | eigenvector: [[ 0.7027949  -0.71139253]
+ [-0.71139253 -0.7027949 ]]
+INFO:eigenvalues_and_eigenvectors:For matrix: [[-0.4500245  0.38724  ]
+ [ 0.38724    0.0645645]] -> eigenvalue is: [-0.65765502  0.27219502] | eigenvector: [[-0.8813089  -0.47254061]
+ [ 0.47254061 -0.8813089 ]]
+INFO:__main__:Finishing run...
