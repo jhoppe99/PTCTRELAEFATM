@@ -124,17 +124,4 @@ class FactorizedSubmatrices():
         
         def create_o_minus_matrix(arr: np.array) -> np.array:
             pass
-        # def
-        # e_plus = np.delete(np.delete(self.arr, 1, axis=0), 1, axis=1)
-        # for x in range(2, 5):
-        #     e_plus = np.delete(np.delete(e_plus, x, axis=0), 2, axis=1)
-        # print(f"E+ arr: \n{e_plus}")        
 
-        # return e_plus
-
-    # def _get_E_minus_matrix(self) -> np.array:
-    #     e_plus = self._get_E_plus_matrix()
-    #     e_minus = np.delete(np.delete(e_plus, 0, axis=0), 0, axis=1)
-    #     print(f"E- arr: \n{e_minus}")
-
-    #     return e_minus

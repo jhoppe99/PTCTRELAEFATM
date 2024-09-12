@@ -9,4 +9,4 @@ def get_eigenvalue_and_eigenvector(matrix: np.array) -> None:
     """
     eigenvalues, eigenvectors = linalg.eigh(matrix)
     
-    logger.info("For matrix: %s -> eigenvalue is: %s | eigenvector: %s", matrix, eigenvalues, eigenvectors)
+    logger.info("For matrix:\n%s\neigenvalue is:\n%s\neigenvector:\n%s", matrix, eigenvalues, eigenvectors)

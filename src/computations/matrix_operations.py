@@ -1,5 +1,10 @@
-import numpy as np
 import math
+import logging
+
+import numpy as np
+
+
+_logger = logging.getLogger(__name__)
 
 
 class DetOfMatrixCalculation:
@@ -8,6 +13,7 @@ class DetOfMatrixCalculation:
 
     def calculate_determinant(self) -> float:
         determinant = np.linalg.det(self.arr)
+        _logger.info("DETERMINANT OF MATRIX\n%shas value:%s", self.arr, determinant)
         return determinant
 
     def round_determinant(self, decimals=0) -> int:
