@@ -14,7 +14,7 @@ def main():
     arguments = get_args_from_input_file(args.input_file)
     _logger.info("ARGUMENTS FROM FILE: %s", arguments)
 
-    app(A=arguments[0], B=arguments[1], C=arguments[2], J=arguments[3])
+    app(A=arguments[0], B=arguments[1], C=arguments[2], J=arguments[3], output_file_path=args.output_file)
     _logger.info("Finishing run...")
 
 if __name__ == "__main__":

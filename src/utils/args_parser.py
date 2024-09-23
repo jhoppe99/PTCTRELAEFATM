@@ -6,7 +6,8 @@ from typing import List, Tuple
 def arguments_parser() -> argparse.Namespace:
     """"""
     parser = argparse.ArgumentParser(description="Variables required for program to run")
-    parser.add_argument("--input_file", type=str, help="Input configuration for run file") 
+    parser.add_argument("--input_file", type=str, help="Input configuration for run file")
+    parser.add_argument("--output_file", type=str, help="Output configuration for run file") 
     parser.add_argument("--a", type=float, default=0.0, help="Molecule position A")
     parser.add_argument("--b", type=float, default=0.0, help="Molecule position B")
     parser.add_argument("--c", type=float, default=0.0, help="Molecule position C")
