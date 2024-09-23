@@ -8,10 +8,13 @@ def arguments_parser() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Variables required for program to run")
     parser.add_argument("--input_file", type=str, help="Input configuration for run file")
     parser.add_argument("--output_file", type=str, help="Output configuration for run file") 
-    parser.add_argument("--a", type=float, default=0.0, help="Molecule position A")
-    parser.add_argument("--b", type=float, default=0.0, help="Molecule position B")
-    parser.add_argument("--c", type=float, default=0.0, help="Molecule position C")
-    parser.add_argument("--j", type=int, default=5, help="Quantum number J")
+    parser.add_argument("--a", type=float, default=0.0, required=False, help="Molecule position A")
+    parser.add_argument("--b", type=float, default=0.0, required=False, help="Molecule position B")
+    parser.add_argument("--c", type=float, default=0.0, required=False, help="Molecule position C")
+    parser.add_argument("--j", type=int, default=5, required=False, help="Quantum number J")
+    parser.add_argument("--ij", type=bool, default=False, help="Calculate for range J=0,1,...,J")
+    parser.add_argument("--save_H_matrices", type=bool, default=False, help="Save H matrices to output file")
+    parser.add_argument("--save_submatrices", type=bool, default=False, help="Save submatrices to output file")
     args = parser.parse_args()
     
     return args

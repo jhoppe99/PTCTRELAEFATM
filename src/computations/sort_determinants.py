@@ -20,5 +20,5 @@ def sort_energies(eigenvals_with_matrix: Dict[float, str]) -> List[Tuple[int, fl
     for x, eigvalue in zip(energy_range, eigenvalues):
         _logger.info("%s ---> %s ---> %s", x, eigvalue, eigenvals_with_matrix[eigvalue])
         all_outputs.append((x, eigvalue, eigenvals_with_matrix[eigvalue]))
-    
+
     return all_outputs
