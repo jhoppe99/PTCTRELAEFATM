@@ -1,6 +1,6 @@
 import numpy as np
 
-from src.matrix_operations import DetOfMatrixCalculation
+from computations.matrix_operations import DetOfMatrixCalculation
 
 
 def test_calculate_determinant() -> None:
