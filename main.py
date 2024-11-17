@@ -24,5 +24,6 @@ def main():
         output_file_path=args.output_file)
     _logger.info("Finishing run...")
 
+
 if __name__ == "__main__":
     main()
