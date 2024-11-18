@@ -31,7 +31,7 @@ class H0andH1matrixes:
         Returns:
             Value of matrix element on given position.
         """       
-        return 0.25 * (self.A - self.B) * (self.J - i) * (self.J - i - 1) * (self.J + i + 1) * (self.J + i + 2)
+        return 0.25 * (self.A - self.B) * sqrt((self.J - i) * (self.J - i - 1) * (self.J + i + 1) * (self.J + i + 2))
 
     def _j_smaller_than_i_by_2(self, i: int) -> float:
         """Calculate H_i,i-2 matrix element.
@@ -42,7 +42,7 @@ class H0andH1matrixes:
         Returns:
             Value of matrix element on given position.
         """
-        return 0.25 * (self.A - self.B) * (self.J + i) * (self.J + i - 1) * (self.J - i + 1) * (self.J - i + 2)
+        return 0.25 * (self.A - self.B) * sqrt((self.J + i) * (self.J + i - 1) * (self.J - i + 1) * (self.J - i + 2))
 
     def _create_matrix_base(self) -> None:
         """Create matrix base, with calculated all elements.
@@ -105,7 +105,7 @@ class EplusEminusOplusOminusMatrixes():
         Returns:
             Value of matrix element on given position.
         """       
-        return 0.25 * (self.A - self.B) * (self.J - i) * (self.J - i - 1) * (self.J + i + 1) * (self.J + i + 2)
+        return 0.25 * (self.A - self.B) * sqrt((self.J - i) * (self.J - i - 1) * (self.J + i + 1) * (self.J + i + 2))
     
     def get_e_plus_matrix(self, arr: np.array) -> np.array:
         """Create E^+ matrix.
