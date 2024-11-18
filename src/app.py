@@ -38,9 +38,7 @@ def _application_loop(
     e_plus = fac_mat.get_e_plus_matrix(arr=H_0)
     eigvalue_eplus, eigvector_eplus = get_eigenvalue_and_eigenvector(e_plus)
     _logger.info("FOR MATRIX EPLUS:\n%s", e_plus)
-    _logger.info(
-        "EIGENVALUE IS: %s AND EIGENVECTOR: %s", eigvalue_eplus, eigvector_eplus
-    )
+    _logger.info("EIGENVALUE IS: %s AND EIGENVECTOR: %s", eigvalue_eplus, eigvector_eplus)
     for val in eigvalue_eplus.tolist():
         eigenvalues_with_matrixes[val] = "E_plus"
 
@@ -54,27 +52,21 @@ def _application_loop(
     o_plus = fac_mat.get_o_plus_matrix(arr=H_1)
     eigvalue_oplus, eigvector_oplus = get_eigenvalue_and_eigenvector(o_plus)
     _logger.info("FOR MATRIX OPLUS:\n%s", o_plus)
-    _logger.info(
-        "EIGENVALUE IS: %s AND EIGENVECTOR: %s", eigvalue_oplus, eigvector_oplus
-    )
+    _logger.info("EIGENVALUE IS: %s AND EIGENVECTOR: %s", eigvalue_oplus, eigvector_oplus)
     for val in eigvalue_oplus.tolist():
         eigenvalues_with_matrixes[val] = "O_plus"
 
     o_minus = fac_mat.get_o_minus_matrix(arr=H_1)
     eigvalue_ominus, eigvector_ominus = get_eigenvalue_and_eigenvector(o_minus)
     _logger.info("FOR MATRIX OMINUS:\n%s", o_minus)
-    _logger.info(
-        "EIGENVALUE IS: %s AND EIGENVECTOR: %s", eigvalue_ominus, eigvector_ominus
-    )
+    _logger.info("EIGENVALUE IS: %s AND EIGENVECTOR: %s", eigvalue_ominus, eigvector_ominus)
     for val in eigvalue_ominus.tolist():
         eigenvalues_with_matrixes[val] = "O_minus"
 
     final_outputs = sort_energies(eigenvalues_with_matrixes)
 
     with open(output_file_path, "a") as f:
-        f.write(
-            f"------------------------------------------------------------------------\n"
-        )
+        f.write(f"------------------------------------------------------------------------\n")
         if save_H_matrices:
             f.write("\n")
             f.write("H_0 matrix:\n")
@@ -105,13 +97,9 @@ def _write_outputs_to_file(
         f.write("\n")
         for otp in final_outputs:
             if is_j_even:
-                f.write(
-                    f"{otp[0]}         {otp[1]:.6f}                     {otp[2]}          {J_even[otp[2]]}\n"
-                )
+                f.write(f"{otp[0]}         {otp[1]:.6f}                     {otp[2]}          {J_even[otp[2]]}\n")
             else:
-                f.write(
-                    f"{otp[0]}         {otp[1]:.6f}                     {otp[2]}          {J_odd[otp[2]]}\n"
-                )
+                f.write(f"{otp[0]}         {otp[1]:.6f}                     {otp[2]}          {J_odd[otp[2]]}\n")
 
 
 def app(
@@ -129,17 +117,11 @@ def app(
         f.write("ROTATIONAL CONSTANTS (IN UNITS OF EV)\n")
         f.write(f"AXX={A}   BXX={B}   CXX={C}\n")
         f.write(f"VALUE OF THE ANGULAR MOMENTUM J={J}\n")
-        f.write(
-            "---------------------------------------------------------------------\n"
-        )
+        f.write("---------------------------------------------------------------------\n")
         f.write("TAU        ENERGY [EV]                 MATRIX          IR\n")
 
     if IJ:
         for j in range(0, J + 1):
-            _application_loop(
-                A, B, C, j, save_H_matrices, save_submatrices, output_file_path
-            )
+            _application_loop(A, B, C, j, save_H_matrices, save_submatrices, output_file_path)
     else:
-        _application_loop(
-            A, B, C, J, save_H_matrices, save_submatrices, output_file_path
-        )
+        _application_loop(A, B, C, J, save_H_matrices, save_submatrices, output_file_path)
