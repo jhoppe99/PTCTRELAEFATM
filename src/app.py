@@ -27,6 +27,8 @@ def _application_loop(
 ) -> None:
     """"""
     eigenvalues_with_matrixes = dict()
+    eigenvalues_with_eigenvectors = dict()
+
     h_matrixes = H0andH1matrixes(A, B, C, J)
     H_0 = h_matrixes.get_H0_matrix()
     H_1 = h_matrixes.get_H1_matrix()
@@ -41,6 +43,8 @@ def _application_loop(
     _logger.info("EIGENVALUE IS: %s AND EIGENVECTOR: %s", eigvalue_eplus, eigvector_eplus)
     for val in eigvalue_eplus.tolist():
         eigenvalues_with_matrixes[val] = "E_plus"
+    for val, vect in zip(eigvalue_eplus.tolist(), eigvector_eplus.tolist()):
+        eigenvalues_with_eigenvectors[val] = vect
 
     e_minus = fac_mat.get_e_minus_matrix2(arr=e_plus)
     eigvalue_emin, eigvector_emin = get_eigenvalue_and_eigenvector(e_minus)
@@ -48,6 +52,8 @@ def _application_loop(
     _logger.info("EIGENVALUE IS: %s AND EIGENVECTOR: %s", eigvalue_emin, eigvector_emin)
     for val in eigvalue_emin.tolist():
         eigenvalues_with_matrixes[val] = "E_minus"
+    for val, vect in zip(eigvalue_emin.tolist(), eigvector_emin.tolist()):
+        eigenvalues_with_eigenvectors[val] = vect
 
     o_plus = fac_mat.get_o_plus_matrix(arr=H_1)
     eigvalue_oplus, eigvector_oplus = get_eigenvalue_and_eigenvector(o_plus)
@@ -55,6 +61,8 @@ def _application_loop(
     _logger.info("EIGENVALUE IS: %s AND EIGENVECTOR: %s", eigvalue_oplus, eigvector_oplus)
     for val in eigvalue_oplus.tolist():
         eigenvalues_with_matrixes[val] = "O_plus"
+    for val, vect in zip(eigvalue_oplus.tolist(), eigvector_oplus.tolist()):
+        eigenvalues_with_eigenvectors[val] = vect
 
     o_minus = fac_mat.get_o_minus_matrix(arr=H_1)
     eigvalue_ominus, eigvector_ominus = get_eigenvalue_and_eigenvector(o_minus)
@@ -62,11 +70,14 @@ def _application_loop(
     _logger.info("EIGENVALUE IS: %s AND EIGENVECTOR: %s", eigvalue_ominus, eigvector_ominus)
     for val in eigvalue_ominus.tolist():
         eigenvalues_with_matrixes[val] = "O_minus"
+    for val, vect in zip(eigvalue_ominus.tolist(), eigvector_ominus.tolist()):
+        eigenvalues_with_eigenvectors[val] = vect
 
+    _logger.info("EIGENVALUES DICT:\n%s\nEIGENVECT DICT:\n%s", eigenvalues_with_matrixes, eigenvalues_with_eigenvectors)
     final_outputs = sort_energies(eigenvalues_with_matrixes)
 
     with open(output_file_path, "a") as f:
-        f.write(f"------------------------------------------------------------------------\n")
+        f.write("------------------------------------------------------------------------\n")
         if save_H_matrices:
             f.write("\n")
             f.write("H_0 matrix:\n")
