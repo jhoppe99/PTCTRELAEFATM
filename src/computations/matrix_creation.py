@@ -21,7 +21,9 @@ class H0andH1matrices:
         Returns:
             float: value of matrix element on given position.
         """
-        return 0.5 * (self.A + self.B) * (self.J * (self.J + 1) - (i * i)) + self.C * (i * i)
+        return 0.5 * (self.A + self.B) * (
+            self.J * (self.J + 1) - (i * i)
+        ) + self.C * (i * i)
 
     def _j_bigger_than_i_by_2(self, i: int) -> float:
         """Calculate H_i,i+2 matrix element.
@@ -32,7 +34,16 @@ class H0andH1matrices:
         Returns:
             float: value of matrix element on given position.
         """
-        return 0.25 * (self.A - self.B) * sqrt((self.J - i) * (self.J - i - 1) * (self.J + i + 1) * (self.J + i + 2))
+        return (
+            0.25
+            * (self.A - self.B)
+            * sqrt(
+                (self.J - i)
+                * (self.J - i - 1)
+                * (self.J + i + 1)
+                * (self.J + i + 2)
+            )
+        )
 
     def _j_smaller_than_i_by_2(self, i: int) -> float:
         """Calculate H_i,i-2 matrix element.
@@ -43,7 +54,16 @@ class H0andH1matrices:
         Returns:
             float: value of matrix element on given position
         """
-        return 0.25 * (self.A - self.B) * sqrt((self.J + i) * (self.J + i - 1) * (self.J - i + 1) * (self.J - i + 2))
+        return (
+            0.25
+            * (self.A - self.B)
+            * sqrt(
+                (self.J + i)
+                * (self.J + i - 1)
+                * (self.J - i + 1)
+                * (self.J - i + 2)
+            )
+        )
 
     def _create_matrix_base(self) -> None:
         """Create matrix base, with calculated all elements.
@@ -111,7 +131,16 @@ class EplusEminusOplusOminusSubmatrices:
         Returns:
             float: value of matrix element on given position
         """
-        return 0.25 * (self.A - self.B) * sqrt((self.J - i) * (self.J - i - 1) * (self.J + i + 1) * (self.J + i + 2))
+        return (
+            0.25
+            * (self.A - self.B)
+            * sqrt(
+                (self.J - i)
+                * (self.J - i - 1)
+                * (self.J + i + 1)
+                * (self.J + i + 2)
+            )
+        )
 
     def get_e_plus_submatrix(self, arr: np.array) -> np.array:
         """Get E+ submatrix from deleting specific rows and columns from H0 matrix.
@@ -150,9 +179,11 @@ class EplusEminusOplusOminusSubmatrices:
         Returns:
             np.array: O+ submatrix
         """
+        print(arr)
         for x in range(1, arr.shape[0]):
             if x < arr.shape[0]:
                 arr = np.delete(np.delete(arr, x, axis=0), x, axis=1)
+        print(f"ARRAY from O+ {arr}")
         if len(arr) > 0 and len(arr[0]) > 0:
             arr[0][0] += self._j_bigger_than_i_by_2(-1)
 
@@ -167,9 +198,11 @@ class EplusEminusOplusOminusSubmatrices:
         Returns:
             np.array: O- submatrix
         """
+        print(arr)
         for x in range(1, arr.shape[0]):
             if x < arr.shape[0]:
                 arr = np.delete(np.delete(arr, x, axis=0), x, axis=1)
+        print(f"ARRAY from O- {arr}")
         if len(arr) > 0 and len(arr[0]) > 0:
             arr[0][0] -= self._j_bigger_than_i_by_2(-1)
 

@@ -78,7 +78,7 @@ def _application_loop(
     for val, vect in zip(eigvalue_emin.tolist(), eigvector_emin.T):
         eigenvalues_with_eigenvectors[val] = vect
 
-    o_plus = fac_mat.get_o_plus_submatrix(arr=H_1)
+    o_plus = fac_mat.get_o_plus_submatrix(arr=H_1.copy())
     eigvalue_oplus, eigvector_oplus = get_eigenvalue_and_eigenvector(o_plus)
     _logger.info("FOR SUBMATRIX OPLUS:\n%s", o_plus)
     _logger.info(
@@ -91,7 +91,7 @@ def _application_loop(
     for val, vect in zip(eigvalue_oplus.tolist(), eigvector_oplus.T):
         eigenvalues_with_eigenvectors[val] = vect
 
-    o_minus = fac_mat.get_o_minus_submatrix(arr=H_1)
+    o_minus = fac_mat.get_o_minus_submatrix(arr=H_1.copy())
     eigvalue_ominus, eigvector_ominus = get_eigenvalue_and_eigenvector(o_minus)
     _logger.info("FOR SUBMATRIX OMINUS:\n%s", o_minus)
     _logger.info(
@@ -112,7 +112,9 @@ def _application_loop(
     final_outputs = sort_energies(eigenvalues_with_matrixes)
 
     with open(output_file_path, "a") as f:
-        f.write("------------------------------------------------------------------------\n")
+        f.write(
+            "------------------------------------------------------------------------\n"
+        )
         if save_H_matrices:
             f.write("\n")
             f.write("H_0 matrix:\n")
@@ -198,11 +200,15 @@ def _write_outputs_to_file(
         f.write("\n")
         for otp in energies:
             if is_j_even:
-                f.write(f"{otp[0]}         {otp[1]:.6e}                     {otp[2]}          {J_even[otp[2]]}\n")
+                f.write(
+                    f"{otp[0]}         {otp[1]:.6e}                     {otp[2]}          {J_even[otp[2]]}\n"
+                )
                 for aknu in _get_aknu(a[otp[1]], otp[2]):
                     f.write(f"{aknu:>88}\n")
             else:
-                f.write(f"{otp[0]}         {otp[1]:.6e}                     {otp[2]}          {J_odd[otp[2]]}\n")
+                f.write(
+                    f"{otp[0]}         {otp[1]:.6e}                     {otp[2]}          {J_odd[otp[2]]}\n"
+                )
                 for aknu in _get_aknu(a[otp[1]], otp[2]):
                     f.write(f"{aknu:>88}\n")
 
@@ -222,11 +228,17 @@ def app(
         f.write("ROTATIONAL CONSTANTS (IN UNITS OF EV)\n")
         f.write(f"AXX={A}   BXX={B}   CXX={C}\n")
         f.write(f"VALUE OF THE ANGULAR MOMENTUM J={J}\n")
-        f.write("---------------------------------------------------------------------\n")
+        f.write(
+            "---------------------------------------------------------------------\n"
+        )
         f.write("TAU        ENERGY [EV]                 MATRIX          IR\n")
 
     if IJ:
         for j in range(0, J + 1):
-            _application_loop(A, B, C, j, save_H_matrices, save_submatrices, output_file_path)
+            _application_loop(
+                A, B, C, j, save_H_matrices, save_submatrices, output_file_path
+            )
     else:
-        _application_loop(A, B, C, J, save_H_matrices, save_submatrices, output_file_path)
+        _application_loop(
+            A, B, C, J, save_H_matrices, save_submatrices, output_file_path
+        )
